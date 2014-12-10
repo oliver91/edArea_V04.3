@@ -17,7 +17,7 @@
         <div><h4>Science:</h4> @course.science</div>
         <div><h4>About course:</h4><br>@course.aboutCourse</div>
 
-        <h2> Уроки</h2>
+        <h2>Содержание</h2>
 
         <ul>
         @for(block <- blockList) {
@@ -25,6 +25,13 @@
         }
         </ul>
 
+
+        @for(block <- blockList) {
+            <div id="@block.blockName">
+                <h3>@block.blockName</h3><br>
+                @block.blockContent
+            </div>
+        }
 
         <br>
         <dd>
