@@ -21,7 +21,8 @@
 
         <ul>
         @for(block <- blockList) {
-           <li><a href="@routes.Application.showErrorPage()">@block.blockName</a></li>
+           @*<li><a href="@routes.Application.showErrorPage()">@block.blockName</a></li>*@
+            <li><a href="#@block.blockName">@block.blockName</a></li>
         }
         </ul>
 
