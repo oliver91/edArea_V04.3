@@ -9,7 +9,7 @@ create table course (
   science                   varchar(255),
   about_course              TEXT,
   logo_path                 varchar(255),
-  current                   boolean,
+  current                   tinyint(1) default 0,
   constraint pk_course primary key (course_name))
 ;
 
@@ -21,14 +21,14 @@ create table course_block (
 ;
 
 create table friends (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   user_email                varchar(255),
   friend_email              varchar(255),
   constraint pk_friends primary key (id))
 ;
 
 create table notification (
-  notification_id           integer not null,
+  notification_id           integer auto_increment not null,
   email_from                varchar(255),
   email_to                  varchar(255),
   notification_message      varchar(255),
@@ -45,46 +45,26 @@ create table user (
   birth_date                varchar(255),
   user_type                 integer,
   password                  varchar(255),
-  last_visit                timestamp,
+  last_visit                datetime,
   constraint pk_user primary key (email))
 ;
-
-create sequence course_seq;
-
-create sequence course_block_seq;
-
-create sequence friends_seq;
-
-create sequence notification_seq;
-
-create sequence user_seq;
 
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists course;
+drop table course;
 
-drop table if exists course_block;
+drop table course_block;
 
-drop table if exists friends;
+drop table friends;
 
-drop table if exists notification;
+drop table notification;
 
-drop table if exists user;
+drop table user;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists course_seq;
-
-drop sequence if exists course_block_seq;
-
-drop sequence if exists friends_seq;
-
-drop sequence if exists notification_seq;
-
-drop sequence if exists user_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
