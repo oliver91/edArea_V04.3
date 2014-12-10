@@ -1,0 +1,31 @@
+@(friends: List[User])
+
+<html>
+    <head>
+        <title>edArea Your Frinds</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea All Users</a>
+        </header>
+
+        <h1>Your friends:</h1><br/>
+        @helper.form(routes.Users.removeFriend()) {
+            <ul>
+            @for(friend <- friends) {
+                <li>
+                    <a href="@routes.Users.showUserPage(friend.id)">  @friend.name </a> <button type="submit" name="email" value="@friend.email">Remove</button>
+                </li>
+            }
+            </ul>
+        }
+        <dd>
+            <a href="@routes.Application.index()">Back</a>
+        </dd>
+
+    </body>
+</html>

@@ -1,0 +1,34 @@
+@(users: List[User], sel_form: Form[Users.SelectFriend])
+
+<html>
+    <head>
+        <title>edArea creating course</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea All Users</a>
+        </header>
+        <h1>You can add a friend:</h1>
+        @helper.form(routes.Users.addFriend()) {
+            <ul>
+            @for(user <- users) {
+                <li>
+                    <p><a href="@routes.Users.showUserPage(user.id)">  @user.name </a> - is
+                    @if(Users.isOnline(user.id)) { online } else { offline }
+
+
+                <button type="submit" name="email" value="@user.email">Add</button></p>
+                </li>
+            }
+            </ul>
+
+            <dd>
+                <a href="@routes.Application.index()">Back</a>
+            </dd>
+        }
+    </body>
+</html>

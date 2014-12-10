@@ -1,0 +1,33 @@
+@(user: User, course: Course, blockList: List[CourseBlock])
+
+    @main(user) {
+
+        <div class="course">
+
+            <dl id="user">
+                <dt>@user.name <span>(@user.email)</span></dt>
+                <dd>
+                    <a href="@routes.Application.logout()">Logout</a>
+                </dd>
+            </dl>
+        </div>
+        <h1>@course.courseName</h1>
+        <h6>@course.logoPath</h6>
+        <div style="width: 100%;"><img src="@routes.Assets.at(course.logoPath)" width="90%" height="90%" style="display:table;margin:0 auto;" alt="лого"><br></div>
+        <div><h4>Science:</h4> @course.science</div>
+        <div><h4>About course:</h4><br>@course.aboutCourse</div>
+
+        <h2> Уроки</h2>
+
+        <ul>
+        @for(block <- blockList) {
+           <li><a href="@routes.Application.showErrorPage()">@block.blockName</a></li>
+        }
+        </ul>
+
+
+        <br>
+        <dd>
+            <a href="@routes.Courses.showCourses()">Back</a>
+        </dd>
+    }

@@ -1,0 +1,44 @@
+@(creatingCourse_form: Form[Course])
+
+<html>
+    <head>
+        <title>edArea creating course</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea</a>
+        </header>
+
+        @helper.form(action = routes.Courses.add(), 'enctype -> "multipart/form-data") {
+            <h1>Creating Course</h1>
+
+            @if(creatingCourse_form.hasGlobalErrors) {
+                <p class="error">
+                @creatingCourse_form.globalError
+                </p>
+            }
+
+            <p>
+                <input required="" type="text" name="courseName" placeholder="Course Name" value="@creatingCourse_form("courseName").value">
+            </p>
+            <p>
+                <input required="" type="text" name="science" placeholder="Science" value="@creatingCourse_form("science").value">
+            </p>
+            <p>
+                <input required="" type="text" name="aboutCourse" placeholder="About course" value="@creatingCourse_form("aboutCourse").value">
+            </p>
+            <p>
+                <button  type="submit"name="submit" value="Upload">Create</button>
+            </p>
+        }
+
+        <dd>
+            <a href="@routes.Application.index()">Back</a>
+        </dd>
+
+    </body>
+</html>

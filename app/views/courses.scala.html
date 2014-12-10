@@ -1,0 +1,31 @@
+@(user: User, courses: List[Course] )
+
+    @main(user) {
+        <div class="login">
+
+            <dl id="user">
+                <dt>@user.name <span>(@user.email)</span></dt>
+                <dd>
+                    <a href="@routes.Application.logout()">Logout</a>
+                </dd>
+            </dl>
+        </div>
+        <h1>Courses Page</h1>
+
+        <h1>@courses.size course(s)</h1>
+
+        <ul>
+        @for(course <- courses) {
+            <li>
+                <a href="@routes.Courses.showCoursePage(course.courseName)">@course.courseName</a>
+                @if(course.email == user.email) {
+                    <a href="@routes.Courses.addCourseContent(course.courseName)" style="font-size: 16px; color: darkorange;"> > Добавить контент </a>
+                }
+            </li>
+        }
+        </ul>
+
+        <dd>
+            <a href="@routes.Application.index()">Back</a>
+        </dd>
+    }

@@ -1,0 +1,29 @@
+@(error : String, errorId : Int)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>edArea - error @errorId</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/bootstrap.css")">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    </head>
+    <body>
+        <table width="90%" height="100%">
+            <tr>
+                <td><img src="@routes.Assets.at("images/pic1.png")"></td>
+                <td><h1>@error - @errorId</h1></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td >   <h2> <a class="btn btn-danger" href="@routes.Application.index()">Doh, go home</a></h2></td>
+            </tr>
+        </table>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,57 @@
+@(user: User, notifications: List[Notification])
+
+@main(user) {
+
+
+   <h1>Home Page</h1>
+    <div class="login">
+
+        <dl id="user">
+            <a href="@routes.Users.showUserPage(user.id)"> <dt>@user.name <span>(@user.email)</span></dt></a>
+
+            <dd>
+                <a href="@routes.Application.logout()">Logout</a>
+            </dd>
+
+
+        </dl>
+    </div>
+
+    @if(user.userType==3) {
+        <dd>
+            <a href="@routes.Courses.creatingCourse()">Create Course</a>
+        </dd>
+        <dd>
+            <a href="@routes.Courses.showCourses()">Your Courses</a>
+        </dd>
+    }
+
+    @if(user.userType==2) {
+        <dd>
+            <a href="@routes.Courses.showCourses()">Новые курсы</a>
+        </dd>
+        <dd>
+            <a href="#">Текущие курсы</a>
+        </dd>
+        <dd>
+            <a href="#">Законченные курсы</a>
+        </dd>
+    }
+
+    <dd>
+        <a href="@routes.Application.messages()">Сообщения</a>
+    </dd>
+
+
+
+    <dd>
+        <a href="@routes.Users.showAll()">Add Users (Add friends)</a>
+    </dd>
+    <dd>
+        <a href="@routes.Users.showAllFriends()">Your Friends</a>
+    </dd>
+    <dd>
+        Your Notifications <a href="@routes.Users.showNotifications()" style="font-size: 20px; color: red;">@notifications.size</a>
+    </dd>
+
+}

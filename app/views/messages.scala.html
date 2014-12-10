@@ -1,0 +1,33 @@
+@(user: User, friends: List[User])
+
+@main(user) {
+    <div class="login">
+
+        <dl id="user">
+            <a href="@routes.Users.showUserPage(user.id)"> <dt>@user.name <span>(@user.email)</span></dt></a>
+
+            <dd>
+                <a href="@routes.Application.logout()">Logout</a>
+            </dd>
+
+
+        </dl>
+    </div>
+    <div style="width: 20%">
+    <table class="table table-bordered" width="20%">
+    @for(friend <- friends) {
+        <tr>
+            <td>
+                <a href="@routes.Application.chat(user.id,friend.id)">@friend.name
+                    @if(Users.isOnline(friend.id)) { <pp class="text-success">online </pp> } else {<pp class="text-info">offline </pp>}
+                </a>
+            </td>
+        </tr>
+    }
+
+
+
+    </table>
+    </div>
+
+}

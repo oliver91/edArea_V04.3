@@ -1,0 +1,40 @@
+@(notifications: List[Notification])
+
+<html>
+    <head>
+        <title>edArea Your Notifications</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea Home Page</a>
+        </header>
+        <h1>Your notifications:</h1>
+
+        <ul>
+        @for(notification <- notifications) {
+            @if(notification.`type`==1){
+                @helper.form(routes.Users.confirmFriend()) {
+                    <li>
+                        @notification.notification_message <button type="submit" name="email" value="@notification.email_from">Confirm</button>
+                    </li>
+                }
+            }
+            @if(notification.`type`==2){
+                @helper.form(routes.Users.confirmRemoveFriend()) {
+                    <li>
+                        @notification.notification_message <button type="submit" name="email" value="@notification.email_from">Confirm</button>
+                    </li>
+                }
+            }
+        }
+        </ul>
+
+            <dd>
+                <a href="@routes.Application.index()">Back</a>
+            </dd>
+    </body>
+    </html>

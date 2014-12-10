@@ -1,0 +1,25 @@
+@(id: Long, message: String)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>edArea uploading image</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-2.1.1.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <blockquote>
+        @message
+        </blockquote>
+
+        <h1>Загрузить Логотип курса</h1>
+
+
+        <form name="fileUploadForm"  method="POST" enctype="multipart/form-data" action="@routes.Courses.uploadFile()">
+            File 1: <br /> <input type="file" required="" name="filePart1" id="filePart1"><br />
+            <input type="submit" value="Загрузить">
+        </form>
+    </body>
+</html>
