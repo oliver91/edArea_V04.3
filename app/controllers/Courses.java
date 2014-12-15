@@ -2,7 +2,9 @@ package controllers;
 
 import com.avaje.ebean.Expr;
 import models.Course;
-import models.CourseBlock;
+import models.Unit;
+import models.UnitBlock;
+import models.UnitBlocks.TextBlock;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
@@ -60,7 +62,7 @@ public class Courses extends Controller
 
     public static Result showCoursePage(String courseName)
     {
-        List<CourseBlock> blockList = CourseBlock.find.where(Expr.like("courseName", "%"+courseName+"%")).findList();
+        List<Unit> blockList = Unit.find.where(Expr.like("courseName", "%"+courseName+"%")).findList();
         return ok(course.render(User.find.byId(request().username()), Course.find.byId(courseName), blockList));
     }
 
@@ -86,30 +88,78 @@ public class Courses extends Controller
     }
 
 
-    public static Result addCourseContent(String courseName)
+    public static Result createUnit(String courseName)
     {
         Course currentCourse = Course.find.byId(courseName);
         currentCourse.current = true;
         currentCourse.save();
-        return ok(addingContentToCourse.render(Form.form(TextBlock.class)));
+        return ok(creatingUnit.render(Form.form(UnitForm.class)));
     }
 
-    public static Result addBlock()
+    public static Result addUnit()
     {
-        Form<TextBlock> addingContentToCourse_form = Form.form(TextBlock.class).bindFromRequest();
+        Form<UnitForm> creatingUnit_form = Form.form(UnitForm.class).bindFromRequest();
         Course currentCourse = Course.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
-        CourseBlock block = new CourseBlock(addingContentToCourse_form.get().blockName, currentCourse.courseName, addingContentToCourse_form.get().blockContent);
-        block.save();
+        Unit unit = new Unit(request().username(), creatingUnit_form.get().unitName, currentCourse.courseName, creatingUnit_form.get().unitAbout, false);
+        unit.save();
         currentCourse.current = false;
         currentCourse.save();
-        List<CourseBlock> blockList = CourseBlock.find.where(Expr.like("courseName", "%"+currentCourse.courseName+"%")).findList();
-        return ok(course.render(User.find.byId(request().username()), currentCourse, blockList));
+        List<Unit> unitList = Unit.find.where(Expr.like("courseName", "%"+currentCourse.courseName+"%")).findList();
+        return ok(course.render(User.find.byId(request().username()), currentCourse, unitList));
+    }
+
+    public static Result editUnit(String unitName)
+    {
+        Unit currentUnit = Unit.find.byId(unitName);
+        currentUnit.current = true;
+        currentUnit.save();
+        List blockList = UnitBlock.find.all();
+        return ok(unitEdit.render(currentUnit, blockList));
+    }
+
+    public static Result createTextBlock()
+    {
+        return ok(createTextBlock.render(Form.form(TextBlockForm.class)));
+    }
+
+    public static Result addTextBlock()
+    {
+        Form<TextBlockForm> creatingTextBlock_form = Form.form(TextBlockForm.class).bindFromRequest();
+        Unit currentUnit = Unit.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
+        int id = TextBlock.find.findRowCount()+1;
+        TextBlock textBlock = new TextBlock(creatingTextBlock_form.get().name, id, currentUnit.unitName, creatingTextBlock_form.get().context);
+        textBlock.save();
+        UnitBlock unitBlock = new UnitBlock(creatingTextBlock_form.get().name, id, currentUnit.unitName, textBlock.context);
+        unitBlock.save();
+//        currentUnit.current = false;
+//        currentUnit.save();
+        List<UnitBlock> blockList = UnitBlock.find.where(Expr.like("unitName", "%"+currentUnit.unitName+"%")).findList();
+        return ok(unitEdit.render(currentUnit, blockList));
+    }
+
+    public static Result unitContentComplite() {
+        Unit currentUnit = Unit.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
+        currentUnit.current = false;
+        currentUnit.save();
+        return ok(courses.render(User.find.byId(request().username()), Course.find.where().like("email", "%" + request().username() + "%").findList()));
+    }
+
+    public static Result showUnitPage(String unitName) {
+        Unit currentUnit = Unit.find.byId(unitName);
+        List<UnitBlock> blockList = UnitBlock.find.where(Expr.like("unitName", "%"+currentUnit.unitName+"%")).findList();
+        return ok(unit.render(currentUnit, blockList));
     }
 
 
-    public static class TextBlock
+    public static class UnitForm
     {
-        public String blockName;
-        public String blockContent;
+        public String unitName;
+        public String unitAbout;
+    }
+
+    public static class TextBlockForm
+    {
+        public String name;
+        public String context;
     }
 }

@@ -1,4 +1,4 @@
-@(user: User, course: Course, blockList: List[CourseBlock])
+@(user: User, course: Course, unitList: List[Unit])
 
     @main(user) {
 
@@ -20,17 +20,23 @@
         <h2>Содержание</h2>
 
         <ul>
-        @for(block <- blockList) {
-           @*<li><a href="@routes.Application.showErrorPage()">@block.blockName</a></li>*@
-            <li><a href="#@block.blockName">@block.blockName</a></li>
+        @for(unit <- unitList) {
+            <li><a href="#@unit.unitName">@unit.unitName</a>
+                @if(course.email == user.email) {
+                    <a href="@routes.Courses.editUnit(unit.unitName)" style="font-size : 12px ; color : darkorange ;"> > Редактировать</a>
+                }
+            </li>
         }
         </ul>
-
-
-        @for(block <- blockList) {
-            <div id="@block.blockName">
-                <h3>@block.blockName</h3><br>
-                @block.blockContent
+         @if(course.email == user.email) {
+            <a href="@routes.Courses.createUnit(course.courseName)" style="font-size : 14px ; color : darkorange;">
+                > Создать Unit </a>
+        }
+        @for(block <- unitList) {
+            <div id="@block.unitName">
+                <h3>@block.unitName</h3><br>
+                @block.unitAbout
+                <a href="@routes.Courses.showUnitPage(block.unitName)" style="font-size: 12px;"> > Читать далее</a>
             </div>
         }
 

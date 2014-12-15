@@ -1,8 +1,8 @@
-@(addingContentToCourse_form: Form[Courses.TextBlock])
+@(creatingTextBlock_form: Form[Courses.TextBlockForm])
 
 <html>
     <head>
-        <title>edArea creating course content</title>
+        <title>edArea creating text block</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet" type="text/css" media="screen"
         href="@routes.Assets.at("stylesheets/login.css")">
@@ -13,20 +13,20 @@
             <a href="@routes.Application.index" id="logo">edArea</a>
         </header>
 
-        @helper.form(action = routes.Courses.addBlock(), 'enctype -> "multipart/form-data") {
-            <h1>Creating Content</h1>
+        @helper.form(action = routes.Courses.addTextBlock(), 'enctype -> "multipart/form-data") {
+            <h1>Creating text block</h1>
 
-            @if(addingContentToCourse_form.hasGlobalErrors) {
+            @if(creatingTextBlock_form.hasGlobalErrors) {
                 <p class="error">
-                @addingContentToCourse_form.globalError
+                @creatingTextBlock_form.globalError
                 </p>
             }
 
             <p>
-                <input required="" type="text" name="blockName" placeholder="Block Name" value="@addingContentToCourse_form("blockName").value">
+                <input required="" type="text" name="name" placeholder="Name" value="@creatingTextBlock_form("name").value">
             </p>
             <p>
-                <textarea required="" type="text" name="blockContent" placeholder="Block Content" rows="25" cols="140" value="@addingContentToCourse_form("blockContent").value"></textarea>
+                <textarea required="" type="text" name="context" placeholder="Context" rows="25" cols="140" value="@creatingTextBlock_form("context").value"></textarea>
             </p>
             <p>
                 <button  type="submit" name="submit" value="Upload">Create</button>

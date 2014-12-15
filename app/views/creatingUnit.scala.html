@@ -1,0 +1,41 @@
+@(creatingUnit_form: Form[Courses.UnitForm])
+
+<html>
+    <head>
+        <title>edArea creating course content</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea</a>
+        </header>
+
+        @helper.form(action = routes.Courses.addUnit(), 'enctype -> "multipart/form-data") {
+            <h1>Creating Unit</h1>
+
+            @if(creatingUnit_form.hasGlobalErrors) {
+                <p class="error">
+                @creatingUnit_form.globalError
+                </p>
+            }
+
+            <p>
+                <input required="" type="text" name="unitName" placeholder="Unit Name" value="@creatingUnit_form("unitName").value">
+            </p>
+            <p>
+                <textarea required="" type="text" name="unitAbout" placeholder="Unit About" rows="25" cols="140" value="@creatingUnit_form("unitAbout").value"></textarea>
+            </p>
+            <p>
+                <button  type="submit" name="submit" value="Upload">Create</button>
+            </p>
+        }
+
+        <dd>
+            <a href="@routes.Application.index()">Back</a>
+        </dd>
+
+    </body>
+</html>

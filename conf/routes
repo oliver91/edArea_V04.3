@@ -31,12 +31,18 @@ POST        /confirmRemoveFriend                  controllers.Users.confirmRemov
 
 GET         /user/:id                             controllers.Users.showUserPage(id : Long)
 
-GET         /addCourseContent                     controllers.Courses.addCourseContent(courseName : String)
-POST        /addingBlock                          controllers.Courses.addBlock()
+GET         /addCourseContent                     controllers.Courses.createUnit(courseName : String)
+POST        /addingBlock                          controllers.Courses.addUnit()
 
+GET         /unitEdit                             controllers.Courses.editUnit(unitName : String)
 
+GET         /createTextBlock                      controllers.Courses.createTextBlock()
+POST        /addTextBlock                         controllers.Courses.addTextBlock()
+GET         /unitContentComplite                  controllers.Courses.unitContentComplite()
 
-GET         /errorPage                                controllers.Application.showErrorPage()
+GET         /unit/:unitName                             controllers.Courses.showUnitPage(unitName : String)
+
+GET         /errorPage                            controllers.Application.showErrorPage()
 
 GET         /assets.javascript.ws.js              controllers.Application.wsJs(userEmail : String, sendTo : String)
 GET         /wsInterface                          controllers.Application.wsInterface(useremail : String, sendTo : String)

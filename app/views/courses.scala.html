@@ -10,7 +10,7 @@
                 </dd>
             </dl>
         </div>
-        <h1>Courses Page</h1>
+        <h1>Courses list page</h1>
 
         <h1>@courses.size course(s)</h1>
 
@@ -19,7 +19,7 @@
             <li>
                 <a href="@routes.Courses.showCoursePage(course.courseName)">@course.courseName</a>
                 @if(course.email == user.email) {
-                    <a href="@routes.Courses.addCourseContent(course.courseName)" style="font-size: 16px; color: darkorange;"> > Добавить контент </a>
+                    <a href="@routes.Courses.createUnit(course.courseName)" style="font-size: 14px; color: darkorange;"> > Создать Unit </a>
                 }
             </li>
         }

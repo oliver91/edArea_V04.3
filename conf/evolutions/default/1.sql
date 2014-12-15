@@ -13,13 +13,6 @@ create table course (
   constraint pk_course primary key (course_name))
 ;
 
-create table course_block (
-  block_name                varchar(255) not null,
-  course_name               varchar(255),
-  block_content             TEXT,
-  constraint pk_course_block primary key (block_name))
-;
-
 create table friends (
   id                        integer auto_increment not null,
   user_email                varchar(255),
@@ -34,6 +27,31 @@ create table notification (
   notification_message      varchar(255),
   type                      integer,
   constraint pk_notification primary key (notification_id))
+;
+
+create table text_block (
+  id                        integer auto_increment not null,
+  block_name                varchar(255),
+  unit_name                 varchar(255),
+  context                   TEXT,
+  constraint pk_text_block primary key (id))
+;
+
+create table unit (
+  unit_name                 varchar(255) not null,
+  email                     varchar(255),
+  course_name               varchar(255),
+  unit_about                TEXT,
+  current                   tinyint(1) default 0,
+  constraint pk_unit primary key (unit_name))
+;
+
+create table unit_block (
+  id                        integer auto_increment not null,
+  block_name                varchar(255),
+  unit_name                 varchar(255),
+  content                   TEXT,
+  constraint pk_unit_block primary key (id))
 ;
 
 create table user (
@@ -58,11 +76,15 @@ SET FOREIGN_KEY_CHECKS=0;
 
 drop table course;
 
-drop table course_block;
-
 drop table friends;
 
 drop table notification;
+
+drop table text_block;
+
+drop table unit;
+
+drop table unit_block;
 
 drop table user;
 

@@ -1,0 +1,36 @@
+@(unit : Unit, blockList: List[UnitBlock])
+<html>
+    <head>
+        <title>edArea unit edit</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen"
+        href="@routes.Assets.at("stylesheets/login.css")">
+
+    </head>
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo">edArea</a>
+        </header>
+
+        <h1>Adding Content to Unit</h1>
+        <i><h4>Unit name:</h4></i><h2>@unit.unitName</h2>
+        <i><h4>About this unit:</h4></i> @unit.unitAbout
+
+        @for(block <- blockList) {
+            <div><i><h4>@block.blockName</h4> @block.content</i></div><br>
+        }
+
+        <br>
+        <dd><a href="@routes.Courses.createTextBlock()" style="font-size: 18px; color: darkorange;"> Добавить текст </a></dd>
+        <dd><a href="@routes.Application.showErrorPage()" style="font-size: 18px; color: darkorange;"> Добавить рисунок</a></dd>
+        <dd><a href="@routes.Application.showErrorPage()" style="font-size: 18px; color: darkorange;"> Добавить видео </a></dd>
+        <dd><a href="@routes.Courses.unitContentComplite()" style="font-size: 18px; color: darkorange;"> Готово </a></dd>
+
+
+        <br>
+        <dd>
+            <a href="@routes.Application.index()">Back</a>
+        </dd>
+
+    </body>
+    </html>
