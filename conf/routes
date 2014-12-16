@@ -40,7 +40,10 @@ GET         /createTextBlock                      controllers.Courses.createText
 POST        /addTextBlock                         controllers.Courses.addTextBlock()
 GET         /unitContentComplite                  controllers.Courses.unitContentComplite()
 
-GET         /unit/:unitName                             controllers.Courses.showUnitPage(unitName : String)
+GET         /unit/:unitName                       controllers.Courses.showUnitPage(unitName : String)
+
+GET         /createPictureBlock                   controllers.Courses.createPictureBlock()
+POST        /addPictureBlock                      controllers.Courses.addPictureBlock()
 
 GET         /errorPage                            controllers.Application.showErrorPage()
 

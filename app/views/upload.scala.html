@@ -1,4 +1,4 @@
-@(id: Long, message: String)
+@(uploadType: Int, message: String) <!--upload type: 1- courseLogo, 2- pictureBlock-->
 
 <!DOCTYPE html>
 
@@ -14,12 +14,21 @@
         @message
         </blockquote>
 
-        <h1>Загрузить Логотип курса</h1>
+        <h1>Загрузить картинку</h1>
 
 
-        <form name="fileUploadForm"  method="POST" enctype="multipart/form-data" action="@routes.Courses.uploadFile()">
-            File 1: <br /> <input type="file" required="" name="filePart1" id="filePart1"><br />
-            <input type="submit" value="Загрузить">
-        </form>
+        @if(uploadType == 1){
+            <form name="fileUploadForm"  method="POST" enctype="multipart/form-data" action="@routes.Courses.uploadFile()">
+                File 1: <br /> <input type="file" required="" name="filePart1" id="filePart1"><br />
+                <input type="submit" value="Загрузить">
+            </form>
+        }
+        @if(uploadType == 2){
+            <form name="fileUploadForm"  method="POST" enctype="multipart/form-data" action="@routes.Courses.addPictureBlock()">
+                File 1: <br /> <input type="file" required="" name="filePart1" id="filePart1"><br />
+                <input type="submit" value="Загрузить">
+            </form>
+        }
+
     </body>
 </html>

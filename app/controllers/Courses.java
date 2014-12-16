@@ -4,6 +4,7 @@ import com.avaje.ebean.Expr;
 import models.Course;
 import models.Unit;
 import models.UnitBlock;
+import models.UnitBlocks.PictureBlock;
 import models.UnitBlocks.TextBlock;
 import models.User;
 import play.data.Form;
@@ -43,7 +44,7 @@ public class Courses extends Controller
                                       creatingCourse_form.get().aboutCourse,
                                       true);
         newCourse.save();
-        return ok(upload.render(null, ""));
+        return ok(upload.render(1, ""));
     }
 
     public static Result showCourses() {
@@ -126,13 +127,39 @@ public class Courses extends Controller
     {
         Form<TextBlockForm> creatingTextBlock_form = Form.form(TextBlockForm.class).bindFromRequest();
         Unit currentUnit = Unit.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
-        int id = TextBlock.find.findRowCount()+1;
+        int id = UnitBlock.find.findRowCount()+1;
         TextBlock textBlock = new TextBlock(creatingTextBlock_form.get().name, id, currentUnit.unitName, creatingTextBlock_form.get().context);
         textBlock.save();
-        UnitBlock unitBlock = new UnitBlock(creatingTextBlock_form.get().name, id, currentUnit.unitName, textBlock.context);
+        UnitBlock unitBlock = new UnitBlock(creatingTextBlock_form.get().name, id, currentUnit.unitName, textBlock.context, 1);
         unitBlock.save();
 //        currentUnit.current = false;
 //        currentUnit.save();
+        List<UnitBlock> blockList = UnitBlock.find.where(Expr.like("unitName", "%"+currentUnit.unitName+"%")).findList();
+        return ok(unitEdit.render(currentUnit, blockList));
+    }
+
+    public static Result createPictureBlock() {
+        return ok(upload.render(2, ""));
+    }
+
+    public static Result addPictureBlock() throws IOException{
+        Unit currentUnit = Unit.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart filePart1 = body.getFile("filePart1");
+        UUID uuid = UUID.randomUUID();  // уникальное имя лого
+
+        File newFile1 = new File("public/logos/"+uuid+".jpg");
+        int id = UnitBlock.find.findRowCount()+1;
+        String logoPath = "logos/"+uuid+".jpg";
+        PictureBlock pictureBlock = new PictureBlock("", id, currentUnit.unitName, logoPath);
+        pictureBlock.save();
+        UnitBlock unitBlock = new UnitBlock(pictureBlock.blockName, id, currentUnit.unitName, pictureBlock.logoPath, 2);
+        unitBlock.save();
+        File file1 = filePart1.getFile();
+        InputStream isFile1 = new FileInputStream(file1);
+        byte[] byteFile1 = org.apache.commons.io.IOUtils.toByteArray(isFile1);
+        org.apache.commons.io.FileUtils.writeByteArrayToFile(newFile1, byteFile1);
+        isFile1.close();
         List<UnitBlock> blockList = UnitBlock.find.where(Expr.like("unitName", "%"+currentUnit.unitName+"%")).findList();
         return ok(unitEdit.render(currentUnit, blockList));
     }

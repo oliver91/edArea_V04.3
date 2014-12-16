@@ -29,6 +29,14 @@ create table notification (
   constraint pk_notification primary key (notification_id))
 ;
 
+create table picture_block (
+  id                        integer auto_increment not null,
+  block_name                varchar(255),
+  unit_name                 varchar(255),
+  logo_path                 varchar(255),
+  constraint pk_picture_block primary key (id))
+;
+
 create table text_block (
   id                        integer auto_increment not null,
   block_name                varchar(255),
@@ -51,6 +59,7 @@ create table unit_block (
   block_name                varchar(255),
   unit_name                 varchar(255),
   content                   TEXT,
+  block_type                integer,
   constraint pk_unit_block primary key (id))
 ;
 
@@ -79,6 +88,8 @@ drop table course;
 drop table friends;
 
 drop table notification;
+
+drop table picture_block;
 
 drop table text_block;
 

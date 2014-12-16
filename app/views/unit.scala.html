@@ -17,7 +17,12 @@
         <i><h4>About this unit:</h4></i> @unit.unitAbout
 
         @for(block <- blockList) {
-            <div><i><h4>@block.blockName</h4> @block.content</i></div>
+            @if(block.blockType == 1) {
+                <div><i><h4>@block.blockName</h4> @block.content</i></div><br>
+            }
+            @if(block.blockType == 2) {
+                <div><img src="@routes.Assets.at(block.content)"></div><br>
+            }
         }
 
         <br>

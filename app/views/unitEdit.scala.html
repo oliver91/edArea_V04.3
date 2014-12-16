@@ -9,7 +9,7 @@
     </head>
     <body>
         <header>
-            <a href="@routes.Application.index" id="logo">edArea</a>
+            <a href="@routes.Courses.unitContentComplite()" id="logo">edArea</a>
         </header>
 
         <h1>Adding Content to Unit</h1>
@@ -17,19 +17,24 @@
         <i><h4>About this unit:</h4></i> @unit.unitAbout
 
         @for(block <- blockList) {
-            <div><i><h4>@block.blockName</h4> @block.content</i></div><br>
+            @if(block.blockType == 1) {
+                <div><i><h4>@block.blockName</h4> @block.content</i></div><br>
+            }
+            @if(block.blockType == 2) {
+                <div><img src="@routes.Assets.at(block.content)"></div><br>
+            }
         }
 
         <br>
         <dd><a href="@routes.Courses.createTextBlock()" style="font-size: 18px; color: darkorange;"> Добавить текст </a></dd>
-        <dd><a href="@routes.Application.showErrorPage()" style="font-size: 18px; color: darkorange;"> Добавить рисунок</a></dd>
+        <dd><a href="@routes.Courses.createPictureBlock()" style="font-size: 18px; color: darkorange;"> Добавить рисунок</a></dd>
         <dd><a href="@routes.Application.showErrorPage()" style="font-size: 18px; color: darkorange;"> Добавить видео </a></dd>
         <dd><a href="@routes.Courses.unitContentComplite()" style="font-size: 18px; color: darkorange;"> Готово </a></dd>
 
 
         <br>
         <dd>
-            <a href="@routes.Application.index()">Back</a>
+            <a href="@routes.Courses.unitContentComplite()">Back</a>
         </dd>
 
     </body>
