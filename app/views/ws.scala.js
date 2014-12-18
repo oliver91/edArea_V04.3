@@ -44,7 +44,7 @@ $(function(){
                 + currentdate.getSeconds();
             message.date = datetime;
             var str = JSON.stringify(message);
-            socket.send(str).val();
+            socket.send(str);
 
 
         }
